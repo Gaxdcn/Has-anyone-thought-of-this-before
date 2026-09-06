@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+<ul style="list-style: none; padding: 0; margin: 0;">
+    {% for post in site.posts %}
+    <li style="margin-bottom: 24px;">
+        <a href="{{ post.url | relative_url }}" style="font-size: 1.25rem; font-weight: 600;">
+            {{ post.title }}
+        </a>
+        <br>
+        <span class="post-date">{{ post.date | date: "%d de %B de %Y" }}</span>
+    </li>
+    {% endfor %}
+</ul>

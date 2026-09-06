@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <style>
+        :root {
+            --bg-color: #FAF6EE;
+            /* Amarelo pastel bem clarinho */
+            --text-color: #2C2A29;
+            /* Grafite suave */
+            --link-color: #3A7CA5;
+            /* Azul sereno desbotado */
+            --border-color: #E6DFD3;
+            /* Linha sutil pastel */
+            --meta-color: #7A7571;
+            /* Cor para datas/subtítulos */
+            --btn-bg: #EFE8DA;
+            /* Fundo do botão no modo claro */
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1E2022;
+            /* Dark mode suave (cinza-escuro) */
+            --text-color: #E2E2E2;
+            /* Off-white */
+            --link-color: #7EB0D5;
+            /* Azul pastel claro */
+            --border-color: #333639;
+            --meta-color: #9A9EAB;
+            --btn-bg: #2D3034;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.7;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Cabeçalho Topo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .site-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        /* Botão de Dark Mode */
+        .theme-toggle {
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+
+        /* Links e Tipografia */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .post-date {
+            color: var(--meta-color);
+            font-size: 0.85rem;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">🌙 Dark</button>
+    </header>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <script>
+        const toggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') toggleBtn.textContent = '☀️ Light';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                toggleBtn.textContent = '🌙 Dark';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.textContent = '☀️ Light';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
